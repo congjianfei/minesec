@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.minesec.service.mapper.CywallMapper">
+<!--    <select id="queryUserList" resultType="user">-->
+<!--        select * from user-->
+<!--    </select>-->
+
+<!--    <select id="queryUserByID" resultType="user">-->
+<!--        select * from user where id= #{id}-->
+<!--    </select>-->
+
+    <insert id="insertCywallInfo" parameterType="com.minesec.service.dao.CywallInfoDao">
+        insert into t_cywall_info(cywall_id,create_time,update_time)
+        values (#{cywallId}, now(),now())
+    </insert>
+</mapper>

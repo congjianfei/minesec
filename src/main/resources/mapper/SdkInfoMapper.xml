@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.minesec.service.mapper.SdkInfoMapper">
+<!--    <select id="queryUserList" resultType="user">-->
+<!--        select * from user-->
+<!--    </select>-->
+
+<!--    <select id="queryUserByID" resultType="user">-->
+<!--        select * from user where id= #{id}-->
+<!--    </select>-->
+
+    <insert id="addSdkInfo" parameterType="com.minesec.service.dao.SdkInfoDao">
+        insert into t_sdk_info(sdk_id, sdk_state,
+                               expired, version,
+                               pk_n, pk_e, user_id,
+                               customer_id, cywall_id,
+                               time_stamp,create_time,update_time)
+        values (#{sdkId}, #{sdkState}, #{expired},#{version},#{pkN},#{pkE},#{userId},#{customerId},#{cywallId},#{timeStamp},now(),now())
+    </insert>
+
+    <update id="updateSdkInfo" parameterType="com.minesec.service.dao.SdkInfoDao">
+        update t_sdk_info set sdk_state=#{sdkState},expired=#{expired},version=#{version},update_time=now(),
+                              pk_n=#{pkN},pk_e=#{pkE}
+        where sdk_id=#{sdkId} and customer_id=#{customerId}
+    </update>
+</mapper>

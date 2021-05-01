@@ -1,0 +1,66 @@
+info:
+  build:
+    name: ${project.artifactId}
+    groupId: ${project.groupId}
+    artifactId: ${project.artifactId}
+    version: ${project.version}
+
+server:
+  port: 8080
+  ssl:
+    enabled: true
+    key-store: classpath:pki/identity.p12
+    key-store-password: secret
+    key-password: secret
+    trust-store: classpath:pki/server-trust.jks
+    trust-store-password: secret
+    client-auth: need
+
+
+endpoints:
+  enabled: true
+  sensitive: false
+
+#data:
+#  test:
+#    envName: dev
+#    envconfig: 127.0.0.1:8080
+spring:
+  banner:
+    location: classpath:banner.txt
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://1.14.143.83:3306/minesec?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: minesec
+    password: m1s3cGo2021!
+
+    #Spring Boot 默认是不注入这些属性值的，需要自己绑定
+    #druid 数据源专有配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+
+    #配置监控统计拦截的filters，stat:监控统计、log4j：日志记录、wall：防御sql注入
+    #如果允许时报错  java.lang.ClassNotFoundException: org.apache.log4j.Priority
+    #则导入 log4j 依赖即可，Maven 地址：https://mvnrepository.com/artifact/log4j/log4j
+    filters: stat,wall
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+mybatis:
+#  mapper-locations: classpath:/mapper/*.xml
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.minesec.service.dao
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
